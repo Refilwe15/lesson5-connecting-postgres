@@ -10,7 +10,7 @@ export const register = async(req : Request,res: Response) => {
     }
     try{
         const existingUser = await userService.findUserByEmail(email)
-        if(!existingUser){
+        if(existingUser){
             return res.status(409).json({message: "Email is already in use"});
         }
         const user = await userService.createUser(email,password)

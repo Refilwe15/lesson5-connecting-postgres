@@ -5,11 +5,15 @@ import { log } from 'console';
 export const addApplication = async (req: Request ,res : Response) => {
     try{
        
+        const { company_name, job_title, status } = req.body
         
         const NewApplication = await applicationService.createApplication(req.body)
         res.status(201).json(NewApplication)
     }catch(error){
+        console.log(error);
+        
         res.status(500).json({message : "Error in creating application"});
+
         
     }
 }

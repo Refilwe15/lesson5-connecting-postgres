@@ -28,12 +28,22 @@ export const protect = async (
             const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
             console.log(decoded, 'decoded token');
 
-            const user : User | null = await findUserByEmail(decoded.email)
+            //const user : User | null = await findUserByEmail(decoded.email)
             
-            req.user = user || undefined
+            //req.user = user || undefined
+
+            //if(!req.user){
+                //return res.status(401)
+               //.json({message: "Not authorize, user not found"});
+            //}
+
+            return next()
         }catch(error){
-       
+            return res.status(401).json({message: "Not authorized, token failed"})
             
         }
+    }else{
+         res.status(400).json({message : "Not authorized, no token"})
     }
+      res.status(400).json({message : "Not authorized"}) 
 }
